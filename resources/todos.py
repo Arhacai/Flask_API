@@ -47,7 +47,9 @@ class TodoList(Resource):
 
     @auth.login_required
     def get(self):
-        return [marshal(todo, todo_fields) for todo in models.Todo.filter(created_by=g.user.id)]
+        return [marshal(todo, todo_fields) for todo in models.Todo.filter(
+            created_by=g.user.id)
+                ]
 
     @marshal_with(todo_fields)
     @auth.login_required
@@ -57,7 +59,9 @@ class TodoList(Resource):
             created_by=g.user.id,
             **args
         )
-        return todo, 201, {'Location': url_for('resources.todos.todo', id=todo.id)}
+        return todo, 201, {
+            'Location': url_for('resources.todos.todo', id=todo.id)
+        }
 
 
 class Todo(Resource):
@@ -93,7 +97,9 @@ class Todo(Resource):
         args = self.reqparse.parse_args()
         query = models.Todo.update(**args).where(models.Todo.id == id)
         query.execute()
-        return models.Todo.get(models.Todo.id == id), 200, {'Location': url_for('resources.todos.todo', id=id)}
+        return models.Todo.get(models.Todo.id == id), 200, {
+            'Location': url_for('resources.todos.todo', id=id)
+        }
 
     @auth.login_required
     def delete(self, id):

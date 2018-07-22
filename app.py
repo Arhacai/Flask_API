@@ -18,7 +18,11 @@ app.secret_key = config.SECRET_KEY
 app.register_blueprint(users_api, url_prefix='/api/v1')
 app.register_blueprint(todos_api, url_prefix='/api/v1')
 
-limiter = Limiter(app, default_limits=[config.DEFAULT_RATE], key_func=get_ipaddr)
+limiter = Limiter(
+    app,
+    default_limits=[config.DEFAULT_RATE],
+    key_func=get_ipaddr
+)
 limiter.limit("40/day")(users_api)
 
 login_manager = LoginManager()

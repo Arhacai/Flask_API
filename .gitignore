@@ -1,0 +1,7 @@
+# Ignore virtual environtment folder
+venv/
+
+# Ignore Pycharm folder
+.idea/
+
+.DS_Store
